@@ -1,0 +1,6 @@
+{
+  "name": "DevQuiz - Modern Frontend Quiz App",
+  "description": "A responsive, accessible, pure vanilla HTML5, CSS3, and JavaScript quiz application with interactive feedback, progress tracking, and performance analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

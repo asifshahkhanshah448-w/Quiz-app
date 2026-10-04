@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevQuiz - Modern Frontend Quiz App</title>
+  <meta name="description" content="A responsive, accessible, pure vanilla HTML5, CSS3, and JavaScript quiz application with interactive feedback, progress tracking, and performance analytics.">
+  <meta property="og:title" content="DevQuiz - Modern Frontend Quiz App">
+  <meta property="og:description" content="Test your frontend engineering knowledge with 10 interactive multiple-choice questions.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- Background ambient decorative circles -->
+  <div class="ambient-glow glow-top" aria-hidden="true"></div>
+  <div class="ambient-glow glow-bottom" aria-hidden="true"></div>
+
+  <main class="quiz-wrapper">
+    <div class="quiz-card" id="quiz-card">
+      
+      <!-- ================= 1. START / WELCOME SCREEN ================= -->
+      <section id="start-screen" class="screen-view active" aria-labelledby="start-title">
+        <div class="brand-badge">
+          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          <span>Frontend Engineering Assessment</span>
+        </div>
+
+        <h1 id="start-title" class="title-primary">Web Development Quiz</h1>
+        <p class="subtitle-text">
+          Challenge your knowledge across HTML5, modern CSS3, ES6+ JavaScript, DOM APIs, and core web performance concepts.
+        </p>
+
+        <div class="quiz-info-grid">
+          <div class="info-item">
+            <div class="info-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </div>
+            <div class="info-content">
+              <span class="info-label">Questions</span>
+              <strong class="info-val">10 Multiple Choice</strong>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="info-content">
+              <span class="info-label">Pace</span>
+              <strong class="info-val">Self-Paced</strong>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="info-content">
+              <span class="info-label">Evaluation</span>
+              <strong class="info-val">Detailed Feedback</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-card">
+          <h2 class="rules-heading">Assessment Guidelines</h2>
+          <ul class="rules-list">
+            <li>Select exactly one answer per question before proceeding.</li>
+            <li>Once an option is selected, your choice is locked for that question.</li>
+            <li>Receive your comprehensive score report and performance rating upon completion.</li>
+          </ul>
+        </div>
+
+        <button type="button" id="start-btn" class="btn btn-primary btn-block">
+          <span>Start Quiz</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </section>
+
+      <!-- ================= 2. ACTIVE QUIZ SCREEN ================= -->
+      <section id="quiz-screen" class="screen-view" aria-labelledby="question-text" hidden>
+        <!-- Header: Category & Counter -->
+        <header class="quiz-header">
+          <span id="question-category" class="category-pill">Topic</span>
+          <span id="question-counter" class="counter-text" aria-live="polite">Question 1 of 10</span>
+        </header>
+
+        <!-- Visual Progress Bar -->
+        <div class="progress-track" role="progressbar" id="progress-bar-track" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10" aria-label="Quiz progress">
+          <div id="progress-bar" class="progress-fill"></div>
+        </div>
+
+        <!-- Question Body -->
+        <div class="question-container">
+          <h2 id="question-text" class="question-title">Loading question...</h2>
+
+          <!-- Four Answer Options -->
+          <div id="options-container" class="options-grid" role="group" aria-label="Answer options">
+            <!-- Dynamically populated via script.js -->
+          </div>
+        </div>
+
+        <!-- Validation Message -->
+        <div id="validation-message" class="validation-banner" role="alert" aria-live="assertive" hidden>
+          <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span id="validation-text">Please select an answer before continuing.</span>
+        </div>
+
+        <!-- Action Footer -->
+        <footer class="quiz-footer">
+          <div class="helper-hint">
+            <span class="hint-dot" aria-hidden="true"></span>
+            <span>Tap an option to select your answer</span>
+          </div>
+          <button type="button" id="next-btn" class="btn btn-primary">
+            <span id="next-btn-text">Next Question</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </footer>
+      </section>
+
+      <!-- ================= 3. RESULT SCREEN ================= -->
+      <section id="result-screen" class="screen-view" aria-labelledby="result-title" hidden>
+        <div class="result-header">
+          <div class="result-icon-wrapper" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+            </svg>
+          </div>
+          <h2 id="result-title" class="title-primary">Quiz Completed!</h2>
+          <p class="subtitle-text">Here is your assessment summary and score evaluation.</p>
+        </div>
+
+        <!-- Big Score Hero Display -->
+        <div class="score-display-card">
+          <div class="score-circle">
+            <span id="final-score-fraction" class="score-number">0 / 10</span>
+            <span class="score-label">Final Score</span>
+          </div>
+          <p id="score-summary" class="score-sentence">You answered 0 out of 10 questions correctly.</p>
+          <div id="performance-badge" class="performance-pill">Great job</div>
+          <p id="performance-text" class="performance-description">Outstanding mastery of frontend fundamentals.</p>
+        </div>
+
+        <!-- Detailed Breakdown Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-title">Total Questions</span>
+            <strong id="stat-total" class="metric-value">10</strong>
+          </div>
+          <div class="metric-card metric-success">
+            <span class="metric-title">Correct Answers</span>
+            <strong id="stat-correct" class="metric-value">0</strong>
+          </div>
+          <div class="metric-card metric-error">
+            <span class="metric-title">Incorrect</span>
+            <strong id="stat-incorrect" class="metric-value">0</strong>
+          </div>
+          <div class="metric-card metric-accent">
+            <span class="metric-title">Accuracy Rate</span>
+            <strong id="stat-accuracy" class="metric-value">0%</strong>
+          </div>
+        </div>
+
+        <button type="button" id="restart-btn" class="btn btn-primary btn-block">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+          <span>Restart Quiz</span>
+        </button>
+      </section>
+
+    </div>
+
+    <!-- Semantic App Footer -->
+    <footer class="app-footer">
+      <p>Frontend Development Internship Project &bull; Built with Pure HTML5, CSS3 &amp; Vanilla JavaScript</p>
+    </footer>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>
